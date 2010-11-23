@@ -8,6 +8,11 @@ module LayoutHelper
     @show_title = show_title
   end
 
+  def title(page_title, show_title = true)
+    @content_for_title = page_title.to_s
+    @show_title = show_title
+  end
+
   def show_title?
     @show_title
   end
@@ -19,4 +24,15 @@ module LayoutHelper
   def javascript(*args)
     content_for(:head) { javascript_include_tag(*args) }
   end
+
+  def locale
+    I18n.locale
+  end
+
+  def text_direction
+    # you need to set :'bidi.direction' = 'right-to-left' in you language locale
+    # if it's right-to-left
+    I18n.translate(:'bidi.direction') == 'right-to-left' ? 'rtl' : 'ltr'
+  end
+
 end
